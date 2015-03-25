@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VariablesViewState
+   version = "1.0">
+   <ContextStates>
+      <ContextState
+         contextName = "-[OrderDetailViewController sendRedeemPoints]:OrderDetailViewController.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[LoyaltyProgramViewController handleGesture:]:LoyaltyProgramViewController.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[OrderDetailViewController viewDidLoad]:OrderDetailViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+   </ContextStates>
+</VariablesViewState>

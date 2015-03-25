@@ -1,0 +1,1088 @@
+//
+//  RestaDetailView.m
+//  Loyalty App
+//
+//  Created by Amit Parmar on 18/06/14.
+//  Copyright (c) 2014 N-Tech. All rights reserved.
+//
+
+#import "RestaDetailView.h"
+#import <QuartzCore/QuartzCore.h>
+#import "OrderProcessViewController.h"
+#import "ReservationDetailViewController.h"
+#import "ReservationDetailViewController1.h"
+#import "Singleton.h"
+#import "RestaurantView.h"
+#import "FavoriteViewController.h"
+#import "specialOfferDetailViewController.h"
+#import "RestaurantJoinedViewController.h"
+#import "orderListViewController.h"
+#import "chatViewController.h"
+
+#define IPAD_XDISTANCE_TOPBUTTONS 30;
+#define IPHONE_XDISTANCE_TOPBUTTONS 30;
+
+@interface RestaDetailView ()
+@end
+
+@implementation RestaDetailView
+@synthesize scrollView, _fromWhere;
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        // Custom initialization
+ 
+        
+    }
+    return self;
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    app = APP;
+    [self.view addSubview:[app setFooterPart]];
+    app._flagMainBtn = 2;
+    
+    self.lblTitleRestaurantDetails.font = FONT_centuryGothic_35;
+    
+//    self.lblCall.font =  [UIFont fontWithName:@"DIN Alternate" size:10.0];
+//    
+// //FONT_centuryGothic_20;
+//    self.lblChat.font =  [UIFont fontWithName:@"Century Gothic" size:10.0];
+//    self.lblFavorite.font = FONT_centuryGothic_DIFFERENTSIZE(11);
+//    self.lblOrderNow.font = FONT_centuryGothic_DIFFERENTSIZE(11);
+//    self.lblReservation.font = FONT_centuryGothic_DIFFERENTSIZE(11);
+
+    indexId = [[Singleton sharedSingleton] getIndexId];
+            
+//    IsHomeDelivery = 0;
+//    IsReservationAcceptance = 0;
+//    IsTakeAway = 0;
+//    IsTherePlaceForChildren = 0;
+//    IsTherePlaceForSmoker = 0;
+ 
+    NSLog(@"----- %@", [[Singleton sharedSingleton] getarrRestaurantList]);
+//    NSLog(@"----- %@", [[[Singleton sharedSingleton] getarrRestaurantList] objectAtIndex:indexId] );
+    
+    if([[[[[Singleton sharedSingleton] getarrRestaurantList] objectAtIndex:indexId] objectForKey:@"IsReservationAcceptance"] intValue] == 0)
+    {
+//        self.btnReservation.hidden = YES;
+        
+        // Final Code
+        // show only 4 buttons
+//        CGRect f = self.btnCall.frame;
+//        f.origin.x = 30;
+//        self.btnCall.frame = f;
+//        
+//        f = self.btnOrder.frame;
+//        f.origin.x = 100;
+//        self.btnOrder.frame = f;
+//
+//        f = self.btnFavorite.frame;
+//        f.origin.x = 170;
+//        self.btnFavorite.frame = f;
+//
+//        f = self.btnChat.frame;
+//        f.origin.x = 240;
+//        self.btnChat.frame = f;
+        
+        
+        //temp code
+        self.btnReservation.hidden = YES;
+        self.lblReservation.hidden = YES;
+        float a = self.view.frame.size.width/4;
+        if(IS_IPAD)
+        {
+            a = a - 45; //IPAD_XDISTANCE_TOPBUTTONS;
+            
+            CGRect f = self.btnCall.frame;
+            f.origin.x = a;
+            self.btnCall.frame = f;
+            
+            f = self.lblCall.frame;
+            f.origin.x = self.btnCall.frame.origin.x - 20;
+            self.lblCall.frame = f;
+            
+            
+            f = self.btnOrder.frame;
+            f.origin.x = a*2;
+            self.btnOrder.frame = f;
+            
+            f = self.lblOrderNow.frame;
+            f.origin.x = self.btnOrder.frame.origin.x - 20;
+            self.lblOrderNow.frame = f;
+            
+            
+            f = self.btnFavorite.frame;
+            f.origin.x = a*3;
+            self.btnFavorite.frame = f;
+            
+            f = self.lblFavorite.frame;
+            f.origin.x = self.btnFavorite.frame.origin.x - 20;
+            self.lblFavorite.frame = f;
+            
+            
+            f = self.btnChat.frame;
+            f.origin.x = a*4;
+            self.btnChat.frame = f;
+            
+            f = self.lblChat.frame;
+            f.origin.x = self.btnChat.frame.origin.x - 20;
+            self.lblChat.frame = f;
+            
+        }
+        else
+        {
+            a = a - 30; // IPHONE_XDISTANCE_TOPBUTTONS;
+            
+            CGRect f = self.btnCall.frame;
+            f.origin.x = 30;//a;
+            self.btnCall.frame = f;
+            
+            f = self.lblCall.frame;
+            f.origin.x = self.btnCall.frame.origin.x - 20;
+            self.lblCall.frame = f;
+            
+            
+            f = self.btnOrder.frame;
+            f.origin.x = 100; //a*2;
+            self.btnOrder.frame = f;
+            
+            f = self.lblOrderNow.frame;
+            f.origin.x = self.btnOrder.frame.origin.x - 20;
+            self.lblOrderNow.frame = f;
+            
+            
+            f = self.btnFavorite.frame;
+            f.origin.x = 180;//a*3;
+            self.btnFavorite.frame = f;
+            
+            f = self.lblFavorite.frame;
+            f.origin.x = self.btnFavorite.frame.origin.x - 20;
+            self.lblFavorite.frame = f;
+            
+            
+            f = self.btnChat.frame;
+            f.origin.x = 260;//a*4;
+            self.btnChat.frame = f;
+            
+            f = self.lblChat.frame;
+            f.origin.x = self.btnChat.frame.origin.x - 20;
+            self.lblChat.frame = f;
+        }
+      
+
+        
+        
+//        //temp - delete it
+//        CGRect f = self.btnCall.frame;
+//        f.origin.x = 30;
+//        self.btnCall.frame = f;
+//        
+//        f = self.btnOrder.frame;
+//        f.origin.x = 90;
+//        self.btnOrder.frame = f;
+//        
+//        f = self.btnReservation.frame;
+//        f.origin.x = 150;
+//        self.btnReservation.frame = f;
+//        
+//        f = self.btnFavorite.frame;
+//        f.origin.x = 210;
+//        self.btnFavorite.frame = f;
+//        
+//        f = self.btnChat.frame;
+//        f.origin.x = 265;
+//        self.btnChat.frame = f;
+    }
+    else
+    {
+        //temp code
+        float a = self.view.frame.size.width/5;
+        if(IS_IPAD)
+        {
+            a = a - IPAD_XDISTANCE_TOPBUTTONS;
+            
+            CGRect f = self.btnCall.frame;
+            f.origin.x =  a;
+            self.btnCall.frame = f;
+            
+            f = self.lblCall.frame;
+            f.origin.x = self.btnCall.frame.origin.x - 20;
+            self.lblCall.frame = f;
+            
+            
+            f = self.btnOrder.frame;
+            f.origin.x = a*2;
+            self.btnOrder.frame = f;
+            
+            f = self.lblOrderNow.frame;
+            f.origin.x = self.btnOrder.frame.origin.x - 20;
+            self.lblOrderNow.frame = f;
+            
+            f = self.btnReservation.frame;
+            f.origin.x = a*3;
+            self.btnReservation.frame = f;
+            
+            f = self.lblReservation.frame;
+            f.origin.x = self.btnReservation.frame.origin.x - 20;
+            self.lblReservation.frame = f;
+            
+            
+            f = self.btnFavorite.frame;
+            f.origin.x =  a*4;
+            self.btnFavorite.frame = f;
+            
+            f = self.lblFavorite.frame;
+            f.origin.x = self.btnFavorite.frame.origin.x - 20;
+            self.lblFavorite.frame = f;
+            
+            f = self.btnChat.frame;
+            f.origin.x = a*5;
+            self.btnChat.frame = f;
+            
+            f = self.lblChat.frame;
+            f.origin.x = self.btnChat.frame.origin.x - 20;
+            self.lblChat.frame = f;
+            
+        }
+        else
+        {
+            //a = a - 35; //IPHONE_XDISTANCE_TOPBUTTONS;
+            
+            CGRect f = self.btnCall.frame;
+            f.origin.x = 20; // a;
+            self.btnCall.frame = f;
+            
+            f = self.lblCall.frame;
+            f.origin.x = self.btnCall.frame.origin.x - 20;
+            self.lblCall.frame = f;
+            
+            
+            f = self.btnOrder.frame;
+            f.origin.x = 80; //a*2;
+            self.btnOrder.frame = f;
+            
+            f = self.lblOrderNow.frame;
+            f.origin.x = self.btnOrder.frame.origin.x - 20;
+            self.lblOrderNow.frame = f;
+            
+            f = self.btnReservation.frame;
+            f.origin.x = 150; //a*3;
+            self.btnReservation.frame = f;
+            
+            f = self.lblReservation.frame;
+            f.origin.x = self.btnReservation.frame.origin.x - 20;
+            self.lblReservation.frame = f;
+            
+            
+            f = self.btnFavorite.frame;
+            f.origin.x =  220;//a*4;
+            self.btnFavorite.frame = f;
+            
+            f = self.lblFavorite.frame;
+            f.origin.x = self.btnFavorite.frame.origin.x - 20;
+            self.lblFavorite.frame = f;
+            
+            f = self.btnChat.frame;
+            f.origin.x = 280; //a*5;
+            self.btnChat.frame = f;
+            
+            f = self.lblChat.frame;
+            f.origin.x = self.btnChat.frame.origin.x - 20;
+            self.lblChat.frame = f;
+            
+        }
+       
+        
+        
+        //final Code
+        //show 5 buttons
+//        CGRect f = self.btnCall.frame;
+//        f.origin.x = 30;
+//        self.btnCall.frame = f;
+//        
+//        f = self.btnOrder.frame;
+//        f.origin.x = 90;
+//        self.btnOrder.frame = f;
+//        
+//        f = self.btnReservation.frame;
+//        f.origin.x = 150;
+//        self.btnReservation.frame = f;
+//        
+//        f = self.btnFavorite.frame;
+//        f.origin.x = 210;
+//        self.btnFavorite.frame = f;
+//        
+//        f = self.btnChat.frame;
+//        f.origin.x = 265;
+//        self.btnChat.frame = f;
+    }
+  
+    self.btnMap.layer.cornerRadius = 5.0;
+    self.btnMap.clipsToBounds = YES;
+    
+    self.btnRate.layer.cornerRadius = 5.0;
+    self.btnRate.clipsToBounds = YES;
+    self.btnRate.backgroundColor = [UIColor colorWithRed:86.0/255.0 green:190.0/255.0 blue:15.0/255.0 alpha:1];
+    
+    UIImage *fav = [UIImage imageNamed:@"favorite-active.png"];
+    if([_fromWhere isEqualToString:@"FromFavorite"])
+    {
+        [self.btnFavorite setBackgroundImage:fav forState:UIControlStateNormal];
+    }
+    else if([_fromWhere isEqualToString:@"FromRestaurant"])
+    {
+        [self performSelectorInBackground:@selector(getFavoriteOfRestaurant) withObject:nil];
+    
+            //FavRestaurantCreatedOn
+        if([[[Singleton sharedSingleton] getarrRestaurantList] count] > 0)
+        {
+            NSString *IsFav = [[[[Singleton sharedSingleton] getarrRestaurantList] objectAtIndex:indexId] objectForKey:@"FavRestaurantCreatedOn"];
+            if([[[Singleton sharedSingleton] ISNSSTRINGNULL:IsFav] isEqualToString:@""])
+            {
+                [self.btnFavorite setBackgroundImage:[UIImage imageNamed:@"favorite.png"] forState:UIControlStateNormal];
+            }
+            else
+            {
+                [self.btnFavorite setBackgroundImage:fav forState:UIControlStateNormal];
+            }
+        }
+        
+    }
+  
+    if(IS_IPAD)
+    {
+        [self performSelector:@selector(setUpMapView) withObject:nil];
+    }
+  //  [self setUpMapView];
+
+    [self setupRestaurantAllDetails];
+    
+    [self setupDetailScrollView];
+    
+   
+    [self performSelectorInBackground:@selector(setupHorizontalScrollView) withObject:nil];
+    
+   
+    // Do any additional setup after loading the view from its nib.
+}
+-(void)setupRestaurantAllDetails
+{
+//    NSLog(@" COUNT : %d", [[[Singleton sharedSingleton] getarrRestaurantList] count]);
+    
+    if([[[Singleton sharedSingleton] getarrRestaurantList] count] > 0)
+    {
+        double lat =  [[[[[Singleton sharedSingleton] getarrRestaurantList] objectAtIndex:indexId] objectForKey:@"Latidute"] doubleValue];
+        double lon =  [[[[[Singleton sharedSingleton] getarrRestaurantList] objectAtIndex:indexId] objectForKey:@"Longitude"] doubleValue];
+        distacne = [[Singleton sharedSingleton] getDistanceBetweenLocations:lat Lon:lon];
+        
+        self.lblRestaurantName.text = [NSString stringWithFormat:@"%@", [[Singleton sharedSingleton] ISNSSTRINGNULL:[[[[Singleton sharedSingleton] getarrRestaurantList] objectAtIndex:indexId] objectForKey:@"StoreName"]]];
+        self.lblRestaurantAddress.text = [NSString stringWithFormat:@"%@, %@", [[Singleton sharedSingleton] ISNSSTRINGNULL:[[[[Singleton sharedSingleton] getarrRestaurantList] objectAtIndex:indexId] objectForKey:@"StreetLine1"]], [[Singleton sharedSingleton] ISNSSTRINGNULL:[[[[Singleton sharedSingleton] getarrRestaurantList] objectAtIndex:indexId] objectForKey:@"StreetLine2"]]];
+        self.lblRestaurantEmail.text = [NSString stringWithFormat:@"%@", [[Singleton sharedSingleton] ISNSSTRINGNULL:[[[[Singleton sharedSingleton] getarrRestaurantList] objectAtIndex:indexId] objectForKey:@"EMail"]]];
+        self.lblRestaurantPhoneno.text = [NSString stringWithFormat:@"%@", [[Singleton sharedSingleton] ISNSSTRINGNULL:[[[[Singleton sharedSingleton] getarrRestaurantList] objectAtIndex:indexId] objectForKey:@"MobileNo"]]];
+        self.lblRestaurantMinOrder.text = [NSString stringWithFormat:@"%@%@",[[Singleton sharedSingleton] ISNSSTRINGNULL:[[[[Singleton sharedSingleton] getarrRestaurantList] objectAtIndex:indexId] objectForKey:@"CurrencySign"]],  [[Singleton sharedSingleton] ISNSSTRINGNULL:[[[[Singleton sharedSingleton] getarrRestaurantList] objectAtIndex:indexId] objectForKey:@"MinimumOrderDollar"]]];
+        self.lblRestaurantDistance.text = [NSString stringWithFormat:@"%@", distacne];
+        
+        // Cuisines
+//        restaurantCategory =             (
+//                                          {
+//                                              Attribute1 = "<null>";
+//                                              MasterId = 45;
+//                                              MasterName = Chinese;
+//                                          },
+//                                          {
+//                                              Attribute1 = "<null>";
+//                                              MasterId = 46;
+//                                              MasterName = Italian;
+//                                          },
+//                                          {
+//                                              Attribute1 = "<null>";
+//                                              MasterId = 47;
+//                                              MasterName = Kathiyawadi;
+//                                          },
+//                                          {
+//                                              Attribute1 = "34c48038-7efd-421b-a1ef-c6d614176ace.jpeg";
+//                                              MasterId = 53;
+//                                              MasterName = Moktail;
+//                                          }
+//                                          );
+        
+        
+        NSMutableArray *arr = [[NSMutableArray alloc]  init];
+        [arr addObject:[[[[Singleton sharedSingleton] getarrRestaurantList] objectAtIndex:indexId] objectForKey:@"restaurantCategory"]];
+        
+        NSArray *aWordArray = [arr valueForKey:@"MasterName"];
+      
+        if([aWordArray count] > 0)
+        {
+            if([[aWordArray objectAtIndex:0] count] > 0)
+            {
+                self.lblRestaurantCuisines.text = [NSString stringWithFormat:@"%@", [[aWordArray objectAtIndex:0] componentsJoinedByString:@", "]];
+            }
+        }
+        
+        //Time
+        
+       NSString *search =   [[Singleton sharedSingleton] getCurrentDayName];//@"Monday";
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"DayName matches %@ ", search];
+        NSArray *array = [[[[[Singleton sharedSingleton] getarrRestaurantList] objectAtIndex:indexId]objectForKey:@"timingmodel"] filteredArrayUsingPredicate: predicate];
+        NSMutableArray *arrTime = [[NSMutableArray alloc] initWithArray:array];
+        if([arrTime count] > 0)
+        {
+            NSString *startTime = [[Singleton sharedSingleton] removePostfixFromTime:[[Singleton sharedSingleton] ISNSSTRINGNULL:[[arrTime objectAtIndex:0]  objectForKey:@"NoonStartTime"]]];
+            NSString *endTime = [[Singleton sharedSingleton] removePostfixFromTime:[[Singleton sharedSingleton] ISNSSTRINGNULL:[[arrTime objectAtIndex:0]  objectForKey:@"EveningEndTime"]]];
+            if([startTime isEqualToString:@""] && [endTime isEqualToString:@""])
+            {
+                self.lblRestaurantTiming.text = [NSString stringWithFormat:@"Time not available"]; 
+            }
+            else if([startTime isEqualToString:@""])
+            {
+                self.lblRestaurantTiming.text = [NSString stringWithFormat:@"%@", startTime];
+            }
+            else if([endTime isEqualToString:@""])
+            {
+                self.lblRestaurantTiming.text = [NSString stringWithFormat:@"%@", endTime];
+            }
+            else
+            {
+                self.lblRestaurantTiming.text = [NSString stringWithFormat:@"%@ to %@", startTime, endTime];
+            }
+        }
+         else
+         {
+               self.lblRestaurantTiming.text = [NSString stringWithFormat:@"Time not available"];             
+         }
+
+    
+        //self.lblRestaurantCost.text = [NSString stringWithFormat:@"%@", [[[[Singleton sharedSingleton] getarrRestaurantList] objectAtIndex:indexId] objectForKey:@"MinimumOrderDollar"]];
+    }
+    else
+    {
+        // if go to direct on 3rd bottom button - My Loyalty
+        
+    }
+}
+-(void)setupDetailScrollView
+{
+//    [self.detailScrollview setBackgroundColor:[UIColor blackColor]];
+    
+    [self.detailScrollview setCanCancelContentTouches:NO];
+    
+    self.detailScrollview.indicatorStyle = UIScrollViewIndicatorStyleWhite;
+    self.detailScrollview.clipsToBounds = YES;
+    self.detailScrollview.scrollEnabled = YES;
+    self.detailScrollview.pagingEnabled = YES;
+    
+  
+    CGFloat scrollViewHeight = 0.0f;
+    for (UIView* view in self.detailScrollview.subviews)
+    {
+        scrollViewHeight += view.frame.size.height;
+    }
+ 
+    //scrollViewHeight = 250;
+    
+    [self.detailScrollview setContentSize:(CGSizeMake(0, scrollViewHeight+20))];
+    
+}
+- (void)setupHorizontalScrollView
+{
+      self.scrollView.backgroundColor = [UIColor colorWithRed:230.0/255.0 green:230.0/255.0 blue:230.0/255.0 alpha:1];
+   //  [self.scrollView setBackgroundColor:[UIColor blackColor]];
+     [scrollView setCanCancelContentTouches:NO];
+    
+    scrollView.indicatorStyle = UIScrollViewIndicatorStyleWhite;
+    scrollView.clipsToBounds = YES;
+    scrollView.scrollEnabled = YES;
+    scrollView.pagingEnabled = YES;
+    
+   //NSInteger tot=0;
+    CGFloat cx;
+    if (IS_IPAD)
+    {
+        cx = 10;
+    }
+    else
+    {
+        cx = 5;
+    }
+    
+    
+//    NSLog(@"%d -", indexId);
+//    NSLog(@"%@ -", [[Singleton sharedSingleton] getarrFavoriteRestaurantList] );
+//    NSLog(@"%@ -", [[Singleton sharedSingleton] getarrRestaurantList] );
+   
+    NSMutableArray * arrImg;
+    if([_fromWhere isEqualToString:@"FromFavorite"])
+    {
+        arrImg  = [[[[[Singleton sharedSingleton] getarrFavoriteRestaurantList] objectAtIndex:0]objectAtIndex:indexId] objectForKey:@"ImagesList"];
+    }
+    else
+    {
+        arrImg  = [[[[Singleton sharedSingleton] getarrRestaurantList] objectAtIndex:indexId] objectForKey:@"ImagesList"];
+    }
+    
+    int count;
+    if([arrImg count] > 0)
+    {
+        count = [arrImg count];
+    }
+    else
+    {
+        count = 1;
+    }
+    
+    for(int i=0; i<count; i++)
+    {
+        UIImageView *imageView = [[UIImageView alloc] init];
+        imageView.image = [UIImage imageNamed:@"defaultImage.png"];
+    
+        if([arrImg count] > 0)
+        {
+            dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0ul);
+            dispatch_async(queue, ^{
+                NSData *imageData;
+                UIImage *image;
+                NSString *imageName = [NSString stringWithFormat:@"%@%@", HOSTMEDIA, [[arrImg objectAtIndex:i] objectForKey:@"UploadPath"]];
+                
+                image =  [[Singleton sharedSingleton] getImageFromCache:[imageName lastPathComponent]];
+                
+                if(image != nil)
+                {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        
+                         imageView.image = image;
+                    });
+                }
+                else
+                {
+                    NSURL *imageURL =[NSURL URLWithString:imageName];
+                    if(imageData == nil)
+                    {
+                        imageData = [[NSData alloc] init];
+                    }
+                    imageData = [NSData dataWithContentsOfURL:imageURL];
+                    //        NSData *data = [NSData dataWithContentsOfURL:imageURL];
+                    image = [UIImage imageWithData:imageData];
+                    
+                    //  /Upload/UserCard/bb1f9253-ae44-44a1-8427-94d1a0e71dfc/bb1f9253-ae44-44a1-8427-94d1a0e71dfc_06102014521AM.png
+                    
+                    [[Singleton sharedSingleton] saveImageInCache:image ImgName: [[arrImg objectAtIndex:i] objectForKey:@"UploadPath"]];
+                    
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        
+                        if(image == nil)
+                        {
+                            imageView.image = [UIImage imageNamed:@"defaultImage.png"];
+                        }
+                        else{
+                            imageView.image = image;
+                        }
+                    });
+                }
+            });
+        }
+        
+//        [imageView.layer setBorderColor: [[UIColor blackColor] CGColor]];
+//        [imageView.layer setBorderWidth: 2.0];
+        
+        CGRect rect = imageView.frame;
+      
+        rect.origin.x = cx;
+      
+        
+        if (IS_IPAD)
+        {
+            rect.size.height = 70;
+            rect.size.width = 110;
+            rect.origin.y = 10;
+        }
+        else
+        {
+            rect.size.height = 50;
+            rect.size.width = 90;
+            rect.origin.y = 10;
+        }
+        
+        imageView.frame = rect;
+        [scrollView addSubview:imageView];
+        if (IS_IPAD)
+        {
+            cx += imageView.frame.size.width+10;
+        }
+        else
+        {
+            cx += imageView.frame.size.width+5;
+        }
+    }
+    
+    [scrollView setContentSize:CGSizeMake(cx, [scrollView bounds].size.height)];
+    
+}
+-(void)getFavoriteOfRestaurant
+{
+    if ([[Singleton sharedSingleton] connection]==0)
+    {
+        UIAlertView *altMsg=[[UIAlertView alloc] initWithTitle:ERROR_CONNECTION message:@"'" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+        [altMsg show];
+    }
+    else
+    {
+        
+           // [self startActivity];
+            
+            NSString * restaurantId = [[[[Singleton sharedSingleton] getarrRestaurantList] objectAtIndex:indexId] objectForKey:@"UserId"];
+            NSUserDefaults *st = [NSUserDefaults standardUserDefaults];
+            NSString * userId ;
+            if([st objectForKey:@"UserId"])
+            {
+                userId =  [st objectForKey:@"UserId"];
+            }
+            
+            NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
+            [dict setValue:restaurantId forKey:@"RestaurantId"];
+            [dict setValue:userId  forKey:@"UserId"];
+            
+            [[Singleton sharedSingleton] getDataWithBlokc:^(NSDictionary *dict)
+             {
+                 NSLog(@"Fav  %@ -- ", dict);
+                 
+                dispatch_async(dispatch_get_main_queue(), ^
+               {
+                   if (dict)
+                   {
+                       //[self stopActivity];
+                       Boolean strData=[[dict objectForKey:@"data"] boolValue];
+                       UIImage *fav = [UIImage imageNamed:@"favorite-active.png"];
+                       UIImage *unfav = [UIImage imageNamed:@"favorite.png"];
+                       
+                       if(strData)
+                       {
+                           IS_RESTAURANT_FAVORITE=TRUE;
+                           [self.btnFavorite setBackgroundImage:fav forState:UIControlStateNormal];
+                       }
+                       else
+                       {
+                           IS_RESTAURANT_FAVORITE=FALSE;
+                           [self.btnFavorite setBackgroundImage:unfav forState:UIControlStateNormal];
+                       }
+                       
+                   }
+                   else
+                   {
+                       UIAlertView *alt=[[UIAlertView alloc] initWithTitle:ERROR_MSG message:@"" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+                       [alt show];
+                       // [self stopActivity];
+                   }
+
+               });
+                 
+                 
+             } :@"/Restaurant/FavouriteRestaurantByUser" data:dict];
+        
+    }
+}
+
+
+#pragma mark BUTTON CLICK EVENT
+- (IBAction)btnBackClick:(id)sender
+{
+   
+    [self.navigationController popViewControllerAnimated:YES];
+    
+//    if([_fromWhere isEqualToString:@"FromFavorite"])
+//    {
+//        FavoriteViewController *detail;
+//        if (IS_IPHONE_5)
+//        {
+//            detail=[[FavoriteViewController alloc] initWithNibName:@"FavoriteViewController-5" bundle:nil];
+//        }
+//        else if(IS_IPAD)
+//        {
+//             detail=[[FavoriteViewController alloc] initWithNibName:@"FavoriteViewController_iPad" bundle:nil];
+//        }
+//        else
+//        {
+//            detail=[[FavoriteViewController alloc] initWithNibName:@"FavoriteViewController" bundle:nil];
+//        }
+//        [self.navigationController pushViewController:detail animated:YES];
+//    }
+//    else if([_fromWhere isEqualToString:@"FromRestaurant"])
+//    {
+//   
+////        for (UIViewController *controller in [self.navigationController viewControllers])
+////        {
+////            if ([controller isKindOfClass:[RestaurantView class]])
+////            {
+////                [self.navigationController popToViewController:controller animated:YES];
+////                break;
+////            }
+////        }
+//        
+//        RestaurantView *detail;
+//        if (IS_IPHONE_5)
+//        {
+//            detail=[[RestaurantView alloc] initWithNibName:@"RestaurantView-5" bundle:nil];
+//        }
+//        else if(IS_IPAD)
+//        {
+//            detail=[[RestaurantView alloc] initWithNibName:@"RestaurantView_iPad" bundle:nil];
+//        }
+//        else
+//        {
+//            detail=[[RestaurantView alloc] initWithNibName:@"RestaurantView" bundle:nil];
+//        }
+//        [self.navigationController pushViewController:detail animated:YES];
+//    }
+//    else if([_fromWhere isEqualToString:@"FromSpecialOfferDetail"])
+//    {
+//        specialOfferDetailViewController *detail;
+//        if (IS_IPHONE_5)
+//        {
+//            detail=[[specialOfferDetailViewController alloc] initWithNibName:@"specialOfferDetailViewController-5" bundle:nil];
+//        }
+//        else if(IS_IPAD)
+//        {
+//             detail=[[specialOfferDetailViewController alloc] initWithNibName:@"specialOfferDetailViewController_iPad" bundle:nil];
+//        }
+//        else
+//        {
+//            detail=[[specialOfferDetailViewController alloc] initWithNibName:@"specialOfferDetailViewController" bundle:nil];
+//        }
+//        [self.navigationController pushViewController:detail animated:YES];
+//    }
+//    else if([_fromWhere isEqualToString:@"FromRestaurantJoin"])
+//    {
+//        RestaurantJoinedViewController *detail;
+//        if (IS_IPHONE_5)
+//        {
+//            detail=[[RestaurantJoinedViewController alloc] initWithNibName:@"RestaurantJoinedViewController-5" bundle:nil];
+//        }
+//        else if(IS_IPAD)
+//        {
+//              detail=[[RestaurantJoinedViewController alloc] initWithNibName:@"RestaurantJoinedViewController_iPad" bundle:nil];
+//        }
+//        else
+//        {
+//            detail=[[RestaurantJoinedViewController alloc] initWithNibName:@"RestaurantJoinedViewController" bundle:nil];
+//        }
+//        [self.navigationController pushViewController:detail animated:YES];
+//    }
+//    else if([_fromWhere isEqualToString:@"FromOrderList"])
+//    {
+//        orderListViewController *list;
+//        if (IS_IPHONE_5)
+//        {
+//            list=[[orderListViewController alloc] initWithNibName:@"orderListViewController-5" bundle:nil];
+//        }
+//        else if(IS_IPAD)
+//        {
+//            list=[[orderListViewController alloc] initWithNibName:@"orderListViewController_iPad" bundle:nil];
+//        }
+//        else
+//        {
+//            list=[[orderListViewController alloc] initWithNibName:@"orderListViewController" bundle:nil];
+//        }
+//        [self.navigationController pushViewController:list animated:YES];
+//    }
+//    else if([_fromWhere isEqualToString:@"OrderProcess"])
+//    {
+//        RestaurantView *detail;
+//        if (IS_IPHONE_5)
+//        {
+//            detail=[[RestaurantView alloc] initWithNibName:@"RestaurantView-5" bundle:nil];
+//        }
+//        else if(IS_IPAD)
+//        {
+//            detail=[[RestaurantView alloc] initWithNibName:@"RestaurantView_iPad" bundle:nil];
+//        }
+//        else
+//        {
+//            detail=[[RestaurantView alloc] initWithNibName:@"RestaurantView" bundle:nil];
+//        }
+//        [self.navigationController pushViewController:detail animated:YES];
+//    }
+//    
+//    else
+//    {
+//        [self.navigationController popViewControllerAnimated:YES];
+//    }
+  
+}
+
+- (IBAction)favoriteClicked:(id)sender
+{
+   if(app._skipRegister == 1)
+   {
+       [[Singleton sharedSingleton] errorLoginFirst];
+   }
+    else
+    {
+        UIImage *fav = [UIImage imageNamed:@"favorite-active.png"];
+        UIImage *unfav = [UIImage imageNamed:@"favorite.png"];
+        
+        if(self.btnFavorite.currentBackgroundImage == fav)
+        {
+            //already fav
+            
+            [self.btnFavorite setBackgroundImage:unfav forState:UIControlStateNormal];
+        }
+        else if(self.btnFavorite.currentBackgroundImage == unfav)
+        {
+            //already unfav
+            
+            [self.btnFavorite setBackgroundImage:fav forState:UIControlStateNormal];
+        }
+        
+        if ([[Singleton sharedSingleton] connection]==0)
+        {
+            UIAlertView *altMsg=[[UIAlertView alloc] initWithTitle:ERROR_CONNECTION message:@"'" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+            [altMsg show];
+        }
+        else
+        {
+            //[self startActivity];
+            
+            NSString * restaurantId = [[[[Singleton sharedSingleton] getarrRestaurantList] objectAtIndex:indexId] objectForKey:@"UserId"];
+            
+            NSUserDefaults *st = [NSUserDefaults standardUserDefaults];
+            NSString * userId ;
+            if([st objectForKey:@"UserId"])
+            {
+                userId =  [st objectForKey:@"UserId"];
+            }
+            
+            NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
+            [dict setValue:restaurantId forKey:@"RestaurantId"];
+            [dict setValue:userId  forKey:@"UserId"];
+            
+            [[Singleton sharedSingleton] getDataWithBlokc:^(NSDictionary *dict)
+             {
+                 NSLog(@"Favorite MEssage : %@ -- ", dict);
+                 
+                 if (dict)
+                 {
+                     // [self stopActivity];
+                     
+                     UIAlertView *alt=[[UIAlertView alloc]initWithTitle:[dict objectForKey:@"message"] message:@"" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+                     [alt show];
+                     
+                 }
+                 else
+                 {
+                     UIAlertView *alt=[[UIAlertView alloc] initWithTitle:ERROR_MSG message:@"" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+                     [alt show];
+                     //[self stopActivity];
+                 }
+                 
+                 
+             } :@"Restaurant/FavouriteToggle" data:dict];
+        }
+    }
+}
+
+- (IBAction)chatClicked:(id)sender
+{
+    chatViewController *chat;
+    if (IS_IPHONE_5)
+    {
+        chat=[[chatViewController alloc] initWithNibName:@"chatViewController-5" bundle:nil];
+    }
+    else if (IS_IPAD)
+    {
+        chat=[[chatViewController alloc] initWithNibName:@"chatViewController_iPad" bundle:nil];
+    }
+    else
+    {
+        chat=[[chatViewController alloc] initWithNibName:@"chatViewController" bundle:nil];
+    }
+    chat.restaurantId =  [[[[Singleton sharedSingleton] getarrRestaurantList] objectAtIndex:indexId] objectForKey:@"UserId"];
+    
+    [self.navigationController pushViewController:chat animated:YES];
+    
+}
+
+-(IBAction)phoneCallClicked:(id)sender
+{
+    
+}
+-(IBAction)orderProcessClicked:(id)sender
+{
+    OrderProcessViewController *order;
+    if (IS_IPHONE_5)
+    {
+        order=[[OrderProcessViewController alloc] initWithNibName:@"OrderProcessViewController-5" bundle:nil];
+    }
+    else if (IS_IPAD)
+    {
+        order=[[OrderProcessViewController alloc] initWithNibName:@"OrderProcessViewController_iPad" bundle:nil];
+    }
+    else
+    {
+        order=[[OrderProcessViewController alloc] initWithNibName:@"OrderProcessViewController" bundle:nil];
+    }
+    [self.navigationController pushViewController:order animated:YES];
+}
+- (IBAction)reservationClicked:(id)sender
+{
+   if(app._skipRegister == 1)
+   {
+       [[Singleton sharedSingleton] errorLoginFirst];
+   }
+    else
+    {
+        ReservationDetailViewController1 *detail;
+        if (IS_IPHONE_5)
+        {
+            detail=[[ReservationDetailViewController1 alloc] initWithNibName:@"ReservationDetailViewController1-5" bundle:nil];
+        }
+        else if (IS_IPAD)
+        {
+            detail=[[ReservationDetailViewController1 alloc] initWithNibName:@"ReservationDetailViewController1_iPad" bundle:nil];
+        }
+        else
+        {
+            detail=[[ReservationDetailViewController1 alloc] initWithNibName:@"ReservationDetailViewController1" bundle:nil];
+        }
+        [self.navigationController pushViewController:detail animated:YES];
+        
+    }
+}
+
+#pragma mark Google map view
+-(void)setUpMapView
+{
+    
+//    if (nil == locationManager)
+//        locationManager = [[CLLocationManager alloc] init];
+//    
+//    locationManager.delegate = self;
+//    //Configure Accuracy depending on your needs, default is kCLLocationAccuracyBest
+//    locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+//    
+//    // Set a movement threshold for new events.
+//    locationManager.distanceFilter = 10.0f; // meters
+//    [locationManager startUpdatingLocation];
+    
+    
+    if([[[Singleton sharedSingleton] getarrRestaurantList] count] > 0)
+    {
+        latitude  =  [[[[[Singleton sharedSingleton] getarrRestaurantList] objectAtIndex:indexId] objectForKey:@"Latidute"] doubleValue];
+        longitude =  [[[[[Singleton sharedSingleton] getarrRestaurantList] objectAtIndex:indexId] objectForKey:@"Longitude"] doubleValue];
+    }
+//    latitude = 35.702069;
+//    longitude = 139.775327;
+//    
+    GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:latitude longitude:longitude zoom:10];
+    mapView_ = [GMSMapView mapWithFrame:self.mapView.bounds camera:camera];
+    mapView_.delegate = self;
+//    mapView_.settings.myLocationButton = YES;
+//    mapView_.settings.compassButton = YES;
+    [self.mapView addSubview:mapView_];
+    [mapView_ addObserver:self
+               forKeyPath:@"myLocation"
+                  options:NSKeyValueObservingOptionNew
+                  context:NULL];
+
+    CLLocationCoordinate2D coordinate;
+    coordinate.latitude=latitude;
+    coordinate.longitude=longitude;
+    GMSMarker *marker = [[GMSMarker alloc] init];
+    marker.title=  [NSString stringWithFormat:@"%@", [[[[Singleton sharedSingleton] getarrRestaurantList] objectAtIndex:indexId] objectForKey:@"StoreName"]];
+    marker.position = coordinate;
+    marker.appearAnimation = kGMSMarkerAnimationPop;
+    marker.map = mapView_;
+    [markers_ addObject:marker];
+    
+//    for(int i=0; i<5; i++)
+//    {
+//        marker.title= [NSString stringWithFormat:@"Map Title %d", i];
+//        marker.position = coordinate;
+//        marker.appearAnimation = kGMSMarkerAnimationPop;
+//        marker.map = mapView_;
+//        [markers_ addObject:marker];
+//    }
+    
+    
+    [self didTapFitBounds];
+}
+
+
+- (void)didTapFitBounds
+{
+    GMSCoordinateBounds *bounds;
+    for (GMSMarker *marker in markers_)
+    {
+        if (bounds == nil)
+        {
+            bounds = [[GMSCoordinateBounds alloc] initWithCoordinate:marker.position
+                                                          coordinate:marker.position];
+        }
+        bounds = [bounds includingCoordinate:marker.position];
+    }
+    GMSCameraUpdate *update = [GMSCameraUpdate fitBounds:bounds
+                                             withPadding:50.0f];
+    [mapView_ moveCamera:update];
+}
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    // Implement here if the view has registered KVO
+    
+    if(IS_IPHONE_5)
+    {
+        @try{
+             mapView_.delegate = nil;
+          //  [mapView_ removeObserver:self forKeyPath:@"myLocation"];
+        }@catch(id anException){
+            //do nothing, obviously it wasn't attached because an exception was thrown
+            NSLog(@"'Cannot remove an observer RestaDetailView for the key path myLocation from GMSMapView because it is not registered as an observer.");
+        }
+
+    }
+    else
+    {
+        
+        @try{
+            mapView_.delegate = nil;
+         //   [mapView_ removeObserver:self forKeyPath:@"myLocation"];
+        }@catch(id anException){
+            //do nothing, obviously it wasn't attached because an exception was thrown
+            NSLog(@"'Cannot remove an observer RestaDetailView for the key path myLocation from GMSMapView because it is not registered as an observer.");
+        }
+    }
+ }
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+- (IBAction)btnMapClicked:(id)sender
+{
+    [self.view addSubview:self.btnBG];
+//    [self performSelector:@selector(setUpMapView)  withObject:nil];
+    
+    [self setUpMapView];
+    
+    if (IS_IPHONE_5)
+    {
+        [self.viewBGMap setFrame:CGRectMake(0, 100, self.viewBGMap.frame.size.width, self.viewBGMap.frame.size.height)];
+    }
+    else
+    {
+        [self.viewBGMap setFrame:CGRectMake(0, 70, self.viewBGMap.frame.size.width, self.viewBGMap.frame.size.height)];
+    }
+    [self.view addSubview:self.viewBGMap];
+}
+- (IBAction)hideParentView:(id)sender
+{
+    [self.btnBG removeFromSuperview];
+    [self.viewBGMap removeFromSuperview];
+}
+@end
